@@ -32,8 +32,8 @@ final class PiiSetupCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $packageName = 'mediamonks/pii-pack';
-        $lockFile = new Lock(__DIR__.'/../../symfony.lock');
-        $package = new Package($packageName, '1.0', '1.0');
+        $lockFile = new Lock(__DIR__.'/../../../symfony.lock');
+        $package = new Package($packageName, '2.0', '2.0');
         $recipe = new Recipe($package, $packageName, '', []);
         $io = new ConsoleIO($input, $output, $this->getHelperSet());
         $composer = new Composer();
@@ -48,7 +48,7 @@ final class PiiSetupCommand extends Command
             'pii:setup' => 'symfony-cmd'
         ], $lockFile);
 
-        $services = __DIR__ . '/../../config/packages/pii.yaml';
+        $services = __DIR__ . '/../../../config/packages/pii.yaml';
         file_put_contents($services, str_replace('#!', '', file_get_contents($services)));
 
         return Command::SUCCESS;
