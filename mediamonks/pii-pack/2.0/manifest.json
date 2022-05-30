@@ -26,37 +26,6 @@
         "<bg=red;fg=white> Always discuss storing PII data with your project manager! </>",
         "<bg=red;fg=white>                                                            </>"
     ],
-    "files": {
-        "config/packages/pii.yaml": {
-            "contents": [
-                "parameters:",
-                "  env(APP_ENCRYPTION_KEY): ''",
-                "",
-                "services:",
-                "  MediaMonks\\Doctrine\\Transformable\\Transformer\\PhpHashTransformer:",
-                "    arguments:",
-                "      - binary: false",
-                "",
-                "  MediaMonks\\Doctrine\\Transformable\\Transformer\\DefuseCryptoEncryptKeyTransformer:",
-                "    lazy: true",
-                "    arguments: ['%env(APP_ENCRYPTION_KEY)%', { binary: false }]",
-                "",
-                "  MediaMonks\\Doctrine\\Transformable\\Transformer\\TransformerPool:",
-                "    public: true",
-                "    calls:",
-                "      - [set, ['hash', '@MediaMonks\\Doctrine\\Transformable\\Transformer\\PhpHashTransformer']]",
-                "      - [set, ['encrypt', '@MediaMonks\\Doctrine\\Transformable\\Transformer\\DefuseCryptoEncryptKeyTransformer']]",
-                "",
-                "  MediaMonks\\Doctrine\\Transformable\\TransformableSubscriber:",
-                "    arguments:",
-                "      - '@MediaMonks\\Doctrine\\Transformable\\Transformer\\TransformerPool'",
-                "    tags:",
-                "      - { name: doctrine.event_subscriber, priority: 100}",
-                ""
-            ],
-            "executable": false
-        }
-    },
     "env": {
         "APP_ENCRYPTION_KEY": ""
     },
