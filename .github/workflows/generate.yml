@@ -35,5 +35,5 @@ jobs:
           git add *.json
           cp -a .github/tmp/archived .
           git add archived/
-          git commit -m "Updated recipe index" || true
+          git commit -m "Updated recipe index"
           git push origin -f main
