@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate
         run: |
-          git ls-tree HEAD */*/* | recipes generate
+          git ls-tree HEAD */*/* | ./recipes generate
           git switch main
           git add *.json
           git add archived/
