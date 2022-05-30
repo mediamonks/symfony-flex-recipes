@@ -37,7 +37,7 @@ final class PiiSetupCommand extends Command
         $recipe = new Recipe($package, $packageName, '', []);
         $io = new ConsoleIO($input, $output, $this->getHelperSet());
         $composer = new Composer();
-        $options = new Options(['root-dir' => '.']);
+        $options = new Options(['root-dir' => '.', 'runtime' => ['dotenv_path' => '.env.local']]);
 
         $envConfigurator = new EnvConfigurator($composer, $io, $options);
         $envConfigurator->configure($recipe, [
