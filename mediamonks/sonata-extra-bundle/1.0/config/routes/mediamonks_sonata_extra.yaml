@@ -1,3 +1,0 @@
-mediamonks_sonata_media:
-    prefix: /%admin_path%
-    resource: "@MediaMonksSonataExtraBundle/Resources/config/routing.yaml"

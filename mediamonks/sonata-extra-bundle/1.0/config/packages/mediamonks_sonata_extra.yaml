@@ -1,6 +1,0 @@
-twig:
-    form_themes:
-        - '@MediaMonksSonataExtra\form_theme.html.twig'
-
-mediamonks_sonata_extra:
-    auto_complete_search_property: 'title'

@@ -1,9 +1,0 @@
-{
-    "bundles": {
-        "MediaMonks\\RestApiBundle\\MediaMonksRestApiBundle": ["all"]
-    },
-    "aliases": ["api", "rest", "rest-api"],
-    "copy-from-recipe": {
-        "config/": "%CONFIG_DIR%/"
-    }
-}
