@@ -1,0 +1,37 @@
+{
+	"manifests": {
+		"mediamonks/sonata-extra-bundle": {
+			"manifest": {
+				"composer-scripts": null,
+				"copy-from-recipe": {
+					"config/": "%CONFIG_DIR%/"
+				},
+				"post-install-output": null,
+				"env": null
+			},
+			"files": {
+				"config/packages/mediamonks_sonata_extra.yaml": {
+					"contents": [
+						"twig:",
+						"    form_themes:",
+						"        - '@MediaMonksSonataExtra\\form_theme.html.twig'",
+						"",
+						"mediamonks_sonata_extra:",
+						"    auto_complete_search_property: 'title'"
+					],
+					"executable": false
+				},
+				"config/routes/mediamonks_sonata_extra.yaml": {
+					"contents": [
+						"mediamonks_sonata_media:",
+						"    prefix: /%admin_path%",
+						"    resource: \"@MediaMonksSonataExtraBundle/Resources/config/routing.yaml\"",
+						""
+					],
+					"executable": false
+				}
+			},
+			"ref": "001991add3ba85bcf209c9ad9f0fc6882fdb0aa7"
+		}
+	}
+}

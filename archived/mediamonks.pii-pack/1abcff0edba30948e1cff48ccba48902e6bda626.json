@@ -1,0 +1,132 @@
+{
+	"manifests": {
+		"mediamonks/pii-pack": {
+			"manifest": {
+				"composer-scripts": {
+					"pii:setup": "symfony-cmd"
+				},
+				"copy-from-recipe": {
+					"config/": "%CONFIG_DIR%/",
+					"src/": "%SRC_DIR%/"
+				},
+				"post-install-output": [
+					"<bg=blue;fg=white>                           </>",
+					"<bg=blue;fg=white> How to work with PII data </>",
+					"<bg=blue;fg=white>                           </>",
+					"",
+					"  * <fg=blue>With Doctrine ORM</>:",
+					"    1. Add <comment>use MediaMonks\\Doctrine\\Mapping\\Annotation as MediaMonks;</> to your entity",
+					"    2. Annotate a property with <comment>@MediaMonks\\Transformable(name=\"encrypt\")</> to encrypt it",
+					"    3. Annotate a property with <comment>@MediaMonks\\Transformable(name=\"hash\")</> to hash it",
+					"",
+					"  * <fg=blue>In other services</>:",
+					"    1. Inject the <comment>MediaMonks\\Doctrine\\Transformable\\Transformer\\TransformerPool</> service",
+					"    2. Get a transformer by calling <comment>$transformerPool->get('encrypt');</>",
+					"    3. Use the transformer by calling <comment>$transformer->transform($value);</> to encrypt or <comment>$transformer->reverseTransform($value);</> to decrypt",
+					"",
+					"<bg=red;fg=white>                                                            </>",
+					"<bg=red;fg=white> Always discuss storing PII data with your project manager! </>",
+					"<bg=red;fg=white>                                                            </>"
+				],
+				"env": null
+			},
+			"files": {
+				"config/packages/pii.yaml": {
+					"contents": [
+						"parameters:",
+						"    # Adds a fallback APP_ENCRYPTION_KEY if the env var is not set.",
+						"    # This allows you to run cache:warmup even if your",
+						"    # environment variables are not available yet.",
+						"    # You should not need to change this value.",
+						"    env(APP_ENCRYPTION_KEY): ''",
+						"",
+						"services:",
+						"    MediaMonks\\Doctrine\\Transformable\\Transformer\\PhpHashTransformer:",
+						"        arguments:",
+						"            -",
+						"                binary: false",
+						"",
+						"    #!MediaMonks\\Doctrine\\Transformable\\Transformer\\DefuseCryptoEncryptKeyTransformer:",
+						"    #!    lazy: true",
+						"    #!    arguments: ['%env(APP_ENCRYPTION_KEY)%', { binary: false }]",
+						"",
+						"    MediaMonks\\Doctrine\\Transformable\\Transformer\\TransformerPool:",
+						"        public: true",
+						"        calls:",
+						"            - [set, ['hash', '@MediaMonks\\Doctrine\\Transformable\\Transformer\\PhpHashTransformer']]",
+						"    #!        - [set, ['encrypt', '@MediaMonks\\Doctrine\\Transformable\\Transformer\\DefuseCryptoEncryptKeyTransformer']]",
+						"",
+						"    MediaMonks\\Doctrine\\Transformable\\TransformableSubscriber:",
+						"        arguments:",
+						"            - '@MediaMonks\\Doctrine\\Transformable\\Transformer\\TransformerPool'",
+						"        tags:",
+						"         - { name: doctrine.event_subscriber, priority: 100}",
+						""
+					],
+					"executable": false
+				},
+				"src/Command/PiiSetupCommand.php": {
+					"contents": [
+						"<?php",
+						"",
+						"namespace App\\Command;",
+						"",
+						"use Composer\\Composer;",
+						"use Composer\\IO\\ConsoleIO;",
+						"use Composer\\Package\\Package;",
+						"use Defuse\\Crypto\\Key;",
+						"use Symfony\\Component\\Console\\Command\\Command;",
+						"use Symfony\\Component\\Console\\Input\\InputInterface;",
+						"use Symfony\\Component\\Console\\Output\\OutputInterface;",
+						"use Symfony\\Flex\\Configurator\\ComposerScriptsConfigurator;",
+						"use Symfony\\Flex\\Configurator\\EnvConfigurator;",
+						"use Symfony\\Flex\\Lock;",
+						"use Symfony\\Flex\\Options;",
+						"use Symfony\\Flex\\Recipe;",
+						"",
+						"final class PiiSetupCommand extends Command",
+						"{",
+						"    public function __construct()",
+						"    {",
+						"        parent::__construct('pii:setup');",
+						"    }",
+						"",
+						"    /**",
+						"     * @param InputInterface $input",
+						"     * @param OutputInterface $output",
+						"     *",
+						"     * @return void",
+						"     * @throws \\Defuse\\Crypto\\Exception\\EnvironmentIsBrokenException",
+						"     */",
+						"    protected function execute(InputInterface $input, OutputInterface $output)",
+						"    {",
+						"        $packageName = 'mediamonks/pii-pack';",
+						"        $lockFile = new Lock(__DIR__.'/../../symfony.lock');",
+						"        $package = new Package($packageName, '1.0', '1.0');",
+						"        $recipe = new Recipe($package, $packageName, '', []);",
+						"        $io = new ConsoleIO($input, $output, $this->getHelperSet());",
+						"        $composer = new Composer();",
+						"        $options = new Options();",
+						"",
+						"        $envConfigurator = new EnvConfigurator($composer, $io, $options);",
+						"        $envConfigurator->configure($recipe, [",
+						"            'APP_ENCRYPTION_KEY' => (Key::createNewRandomKey())->saveToAsciiSafeString()",
+						"        ], $lockFile);",
+						"        $composerScriptsConfigurator = new ComposerScriptsConfigurator($composer, $io, $options);",
+						"        $composerScriptsConfigurator->unconfigure($recipe, [",
+						"            'pii:setup' => 'symfony-cmd'",
+						"        ], $lockFile);",
+						"",
+						"        $services = __DIR__.'/../../config/packages/pii.yaml';",
+						"        file_put_contents($services, str_replace('#!', '', file_get_contents($services)));",
+						"    }",
+						"}",
+						""
+					],
+					"executable": false
+				}
+			},
+			"ref": "1abcff0edba30948e1cff48ccba48902e6bda626"
+		}
+	}
+}

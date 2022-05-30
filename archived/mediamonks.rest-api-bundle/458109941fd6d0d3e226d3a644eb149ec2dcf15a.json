@@ -1,0 +1,32 @@
+{
+	"manifests": {
+		"mediamonks/rest-api-bundle": {
+			"manifest": {
+				"composer-scripts": null,
+				"copy-from-recipe": {
+					"config/": "%CONFIG_DIR%/"
+				},
+				"post-install-output": null,
+				"env": null
+			},
+			"files": {
+				"config/packages/mediamonks_rest_api.yaml": {
+					"contents": [
+						"mediamonks_rest_api:",
+						"    request_matcher:",
+						"        path: /api",
+						""
+					],
+					"executable": false
+				},
+				"src/Controller/Api/.gitignore": {
+					"contents": [
+						""
+					],
+					"executable": false
+				}
+			},
+			"ref": "458109941fd6d0d3e226d3a644eb149ec2dcf15a"
+		}
+	}
+}

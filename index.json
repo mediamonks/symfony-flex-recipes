@@ -1,0 +1,42 @@
+{
+	"aliases": {
+		"admin": "mediamonks/admin-pack",
+		"api": "mediamonks/rest-api-bundle",
+		"encrypt": "mediamonks/pii-pack",
+		"encryption": "mediamonks/pii-pack",
+		"entity-modal": "mediamonks/sonata-extra-bundle",
+		"hash": "mediamonks/pii-pack",
+		"hashing": "mediamonks/pii-pack",
+		"pii": "mediamonks/pii-pack",
+		"rest": "mediamonks/rest-api-bundle",
+		"rest-api": "mediamonks/rest-api-bundle",
+		"sonata": "mediamonks/admin-pack",
+		"sonata-admin": "mediamonks/admin-pack",
+		"sonata-extra": "mediamonks/sonata-extra-bundle"
+	},
+	"recipes": {
+		"mediamonks/admin-pack": [
+			"1.0"
+		],
+		"mediamonks/pii-pack": [
+			"1.0",
+			"2.0"
+		],
+		"mediamonks/rest-api-bundle": [
+			"3.0"
+		],
+		"mediamonks/sonata-extra-bundle": [
+			"1.0"
+		]
+	},
+	"branch": "tree",
+	"is_contrib": true,
+	"_links": {
+		"repository": "github.com/mediamonks/symfony-flex-recipes",
+		"origin_template": "{package}:{version}@github.com/mediamonks/symfony-flex-recipes:tree",
+		"recipe_template": "https://raw.githubusercontent.com/mediamonks/symfony-flex-recipes/tree/{package_dotted}.{version}.json",
+		"recipe_template_relative": "{package_dotted}.{version}.json",
+		"archived_recipes_template": "https://raw.githubusercontent.com/mediamonks/symfony-flex-recipes/main/archived/{package_dotted}/{ref}.json",
+		"archived_recipes_template_relative": "archived/{package_dotted}/{ref}.json"
+	}
+}
