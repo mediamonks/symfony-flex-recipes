@@ -27,9 +27,13 @@ jobs:
 
       - name: Generate
         run: |
-          git ls-tree HEAD */*/* | ./recipes generate
+          mkdir .github/tmp
+          git ls-tree HEAD */*/* | ./recipes generate .github/tmp
           git switch main
+          git rm -q *.json
+          mv .github/tmp/*.json .
           git add *.json
+          cp -a .github/tmp/archived .
           git add archived/
           git commit -m "Updated recipe index" || true
           git push origin -f main
