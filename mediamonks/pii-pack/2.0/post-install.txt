@@ -1,0 +1,17 @@
+<bg=blue;fg=white>                           </>
+<bg=blue;fg=white> How to work with PII data </>
+<bg=blue;fg=white>                           </>
+
+  * <fg=blue>With Doctrine ORM</>:
+    1. Add <comment>use MediaMonks\Doctrine\Mapping as MediaMonks;</> to your entity
+    2. Annotate a property with <comment>@MediaMonks\Transformable(name="encrypt")</> to encrypt it
+    3. Annotate a property with <comment>@MediaMonks\Transformable(name="hash")</> to hash it
+
+  * <fg=blue>In other services</>:
+    1. Inject the <comment>MediaMonks\Doctrine\Transformable\Transformer\TransformerPool</> service
+    2. Get a transformer by calling <comment>$transformerPool->get('encrypt');</>
+    3. Use the transformer by calling <comment>$transformer->transform($value);</> to encrypt or <comment>$transformer->reverseTransform($value);</> to decrypt
+
+<bg=red;fg=white>                                                            </>
+<bg=red;fg=white> Always discuss storing PII data with your project manager! </>
+<bg=red;fg=white>                                                            </>

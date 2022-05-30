@@ -1,0 +1,20 @@
+_sonata_admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /%admin_path%
+    options:
+        expose: true
+
+_sonata_admin_resource:
+    resource: .
+    type: sonata_admin
+    prefix: /%admin_path%
+    options:
+        expose: true
+
+admin_login:
+    path: /%admin_path%/login
+    controller: App\Controller\Admin\SecurityController::loginAction
+
+admin_logout:
+    path: /%admin_path%/logout
+    controller: App\Controller\Admin\SecurityController::logoutAction

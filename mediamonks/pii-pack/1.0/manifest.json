@@ -1,0 +1,10 @@
+{
+    "aliases": ["pii", "encrypt", "encryption", "hash", "hashing"],
+    "composer-scripts": {
+        "pii:setup": "symfony-cmd"
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/",
+        "src/": "%SRC_DIR%/"
+    }
+}

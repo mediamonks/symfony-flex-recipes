@@ -1,0 +1,20 @@
+sonata_admin:
+    title: 'MediaMonks'
+    security:
+        handler: sonata.admin.security.handler.role
+    templates:
+        user_block: 'admin/user_block.html.twig'
+    dashboard:
+        groups:
+            admin.group.global:
+                label: Global
+                items:
+                    - admin.user
+                roles: [ ROLE_ROOT ]
+
+services:
+    admin.user:
+        class: App\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Global, label: Users}
+        arguments: [ ~, App\Entity\User, ~]

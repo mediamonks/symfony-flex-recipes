@@ -1,0 +1,9 @@
+{
+  "aliases": ["sonata-extra", "entity-modal"],
+  "bundles": {
+    "MediaMonks\\SonataExtraBundle\\MediaMonksSonataExtraBundle": ["all"]
+  },
+  "copy-from-recipe": {
+    "config/": "%CONFIG_DIR%/"
+  }
+}

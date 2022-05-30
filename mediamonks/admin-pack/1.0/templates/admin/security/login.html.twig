@@ -1,0 +1,75 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block sonata_header %}{% endblock %}
+{% block sonata_left_side %}{% endblock %}
+{% block sonata_nav %}{% endblock %}
+{% block sonata_breadcrumb %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        .content {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            background: #dedede;
+            background-size: cover !important;
+        }
+
+        .wrapper {
+            background-color: transparent !important;
+        }
+
+        .login-box-custom {
+            padding: 20px 50px 50px 50px;
+            border-radius: 4px;
+            background-color: white;
+            margin-top: 100px;
+        }
+    </style>
+{% endblock %}
+
+{% block sonata_head_title %}Secured Area{% endblock %}
+
+{% block sonata_wrapper %}
+    {% block sonata_page_content %}
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 login-box-custom">
+                <h1><i class="fa fa-lock"></i> Secured Area</h1>
+
+                {% if error %}
+                    <div class="alert alert-danger"
+                         role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                <form action="{{ path('admin_login') }}" method="post">
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" name="_username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="_password"
+                               placeholder="Password">
+                    </div>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="remember_me" name="_remember_me"/> Keep me logged in
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-sign-in"></i> Login</button>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,35 @@
+name: Update Flex Recipes Index
+
+on:
+  push:
+    branches:
+      - tree
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  generate:
+    name: Generate Index
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        id: checkout
+        with:
+          fetch-depth: 0
+
+      - name: Configure
+        run: |
+          git config --global user.email ""
+          git config --global user.name "github-action[bot]"
+
+      - name: Generate
+        run: |
+          git ls-tree HEAD */*/* | recipes generate
+          git switch main
+          git add *.json
+          git add archived/
+          git commit -m "Updated recipe index" || true
+          git push origin -f main
