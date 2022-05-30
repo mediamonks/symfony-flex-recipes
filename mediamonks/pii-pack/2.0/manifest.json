@@ -58,7 +58,7 @@
         }
     },
     "env": {
-        "APP_ENCRYPTION_KEY": ""
+        "APP_ENCRYPTION_KEY": "%generate(secret, 32)%"
     },
     "ref": ""
 }
