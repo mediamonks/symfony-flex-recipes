@@ -51,9 +51,7 @@ class UserAdmin extends AbstractAdmin
             ->add('createdAt')
         ;
 
-        $securityChecker = $this->getConfigurationPool()->getContainer()->get('security.authorization_checker');
-
-        if ($securityChecker->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
+        if ($this->authorizationChecker->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $list
                 ->add(
                     'impersonating',
