@@ -1,0 +1,7 @@
+<bg=blue;fg=white>                     </>
+<bg=blue;fg=white> Admin Configuration </>
+<bg=blue;fg=white>                     </>
+
+  * <fg=blue>Configure the admin</> for your application:
+    1. Make sure your database is configured correctly
+    2. Execute the <comment>php bin/console admin:setup</> command and follow instructions
